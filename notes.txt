@@ -1,0 +1,4 @@
+'token': ''
+'team_id': ''
+api_app_id
+event: [client_msg_id', 'type: 'message', 'text', 'user', 'ts', 'team', 'blocks', 'block_id', channel_type: 'im']
