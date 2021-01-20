@@ -2,7 +2,6 @@ import pandas as pd
 import io
 
 
-
 ## Lambda helper functions
 def day_to_num (row):
     if row['Day'] == 'Monday': 
@@ -29,7 +28,7 @@ def time_to_num(row):
 
 def process_file(file):
     df = pd.read_csv(file)
-    defined = df[(df['Day'] != 'Undefined') & (df['AM/PM'] != 'Undefined ')]
+    defined = df[(df['Day'] != 'Undefined ') & (df['AM/PM'] != 'Undefined ') & (df['Day'] != 'Undefined') & (df['AM/PM'] != 'Undefined')]
     defined = defined.fillna('Drop')
     defined["Companies"] = defined['Company 2'] + ',' + defined['Company 3'] + ',' + defined['Company 4'] + ',' + defined['Company 5'] + ',' + defined['Company 6'] + ',' + defined['Company 7'] + ',' + defined['Company 8']
     pre_split = defined[['Name', 'Day', 'AM/PM', 'Companies']].copy()
@@ -53,7 +52,13 @@ def process_file(file):
     company_schedule = company_schedule.assign(ToD=col2.values)
     company_schedule.sort_values(by=['DoW', 'ToD'], ascending=[True, True])
 
-    return company_schedule.to_csv('matches.csv', index=False)
+    try:
+        company_schedule.to_csv('./matches.csv', index=False)
+        return True
+    except:
+        print("Failed to write file from pipeline")
+        return False
+
 
 # For making list of pending mentors
 #undefined = df[(df['Day'] == 'Undefined') | (df['AM/PM'] == 'Undefined ')]
