@@ -50,10 +50,11 @@ def process_file(file):
     company_schedule = company_schedule.assign(DoW=col1.values)
     col2 = company_schedule.apply(time_to_num, axis=1)
     company_schedule = company_schedule.assign(ToD=col2.values)
-    company_schedule.sort_values(by=['DoW', 'ToD'], ascending=[True, True])
+    company_schedule['Full'] = company_schedule['Day'] + ' - ' + company_schedule['AM/PM'] + ' - ' + company_schedule['Mentor-Company']
+    company_schedule = company_schedule.sort_values(by=['DoW', 'ToD'], ascending=[True, True])
 
     try:
-        company_schedule.to_csv('./matches.csv', index=False)
+        company_schedule['Full'].to_csv('./matches.csv', index=False)
         return True
     except:
         print("Failed to write file from pipeline")
