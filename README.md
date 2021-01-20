@@ -17,6 +17,7 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 - [x] message on success or error
 	- [ ] send attachment on success
 - [ ] Write instructions
+- [ ] Create requirements.txt
 - [x] Write report
 # Inputs
 - Name (First, Last), Object
