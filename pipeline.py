@@ -5,7 +5,7 @@ import os
 
 
 
-## Lambda helper functions
+# Lambda helper functions
 def day_to_num (row):
     if row['Day'] == 'Monday': 
         return 0
@@ -66,7 +66,7 @@ def process_file(file):
     pending_mentors = unassigned_mentors + list(set(defined_mentors) - set(assigned_mentors))
     try:
         company_schedule['Full'].to_csv('./matches.csv', index=False, header=False)
-        return True, match_stats, pending_mentors, unassigned_companies # Success, meeting stats as dict, unassigned mentors, unassigned companies
+        return True, match_stats, pending_mentors, unassigned_companies
     except:
         print("Failed to write file from pipeline")
         return [False, {}, [], []]
@@ -93,18 +93,3 @@ if __name__=="__main__":
             print("Unassigned Companies:")
             for j in unassigned_companies:
                 print(j)
-
-
-
-
-
-
-# For making list of pending mentors
-#undefined = df[(df['Day'] == 'Undefined') | (df['AM/PM'] == 'Undefined ')]
-
-# for showing how many mentors each company has
-# matches = company_schedule['Company'].value_counts()
-# matches
-
-# for making list of all companies that have been assigned
-#co_list = post_split['Company'].drop_duplicates()

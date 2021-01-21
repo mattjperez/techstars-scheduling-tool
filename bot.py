@@ -1,12 +1,13 @@
-import slack
-import os
-from pathlib import Path
-from dotenv import load_dotenv # loads .env 
-from flask import Flask
-from slackeventsapi import SlackEventAdapter
-import requests
-from pipeline import process_file # output_file = process_data(csv_file)
 import io
+import os
+import slack
+import requests
+from flask import Flask
+from pathlib import Path
+from dotenv import load_dotenv 
+from slackeventsapi import SlackEventAdapter
+
+from pipeline import process_file 
 
 # Load Environment Variables
 env_path = Path('.') / '.env'
@@ -35,7 +36,6 @@ def message(payload):
         print("No file attached!")
 
     if user_id != None and BOT_ID != user_id and file:
-        #print(f'File: {file[0]}')
         file_info = file[0]
         if file_info['filetype'] == 'csv':
             download_url = file_info['url_private']
@@ -65,8 +65,7 @@ def get_file(private_url):
         data = resp.content.decode('utf8')
         return io.StringIO(data)
     except:
-        print("Error downloading/StringIO'ing data")
-
+        print("Error downloading file")
 
 
 def post_file(channels):
@@ -87,4 +86,3 @@ def post_file(channels):
 
 if __name__=="__main__":
     app.run(debug=True)
-

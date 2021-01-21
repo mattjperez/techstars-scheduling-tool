@@ -6,17 +6,17 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 
 # Steps
 - [x] Create bot
-- [x] parse DM 
+- [x] parse Direct Message to bot 
 	- [x] private_link
 	- [x] channels
 	- [x] filename
 	- [x] filetype
 - [x] use requests to download csv
-- [x] route csv through data pipeline (pandas); from pipeline import process_data
+- [x] route csv through data pipeline (pandas)
 - [x] wrangle data
 - [x] yield results (minimum)
 	- [x] reformat output without expanded data
-- [x] put results in clean format (groupby 'Day', 'AM/PM')
+	- [x] put results in clean format (groupby 'Day', 'AM/PM')
 - [x] return csv
 - [x] create post keys
 	- [x] filename
@@ -25,7 +25,6 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 	- [x] auth
 - [x] Write instructions
 - [x] Create requirements.txt
-- [ ] Take screenshots
 - [x] Write report
 
 # Minimum Output: Schedule of meetings between mentors and companies
