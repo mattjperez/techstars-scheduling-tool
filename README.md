@@ -4,28 +4,6 @@
 Automates matchmaking of mentors and founders by availability and preference.
 Goal: Automate processes for staff (Program Associate and Program Manager) to reduce time spent on matching startups to mentors.
 
-# Steps
-- [x] Create bot
-- [x] parse Direct Message to bot 
-	- [x] private_link
-	- [x] channels
-	- [x] filename
-	- [x] filetype
-- [x] use requests to download csv
-- [x] route csv through data pipeline (pandas)
-- [x] wrangle data
-- [x] yield results (minimum)
-	- [x] reformat output without expanded data
-	- [x] put results in clean format (groupby 'Day', 'AM/PM')
-- [x] return csv
-- [x] create post keys
-	- [x] filename
-	- [x] filetype
-	- [x] channels
-	- [x] auth
-- [x] Write instructions
-- [x] Create requirements.txt
-- [x] Write report
 
 # Minimum Output: Schedule of meetings between mentors and companies
 - Schedule of meetings between mentors and companies
@@ -45,20 +23,25 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 
 # My Solution
 ## MVP
-- Slackbot in collaboration channel that produces CSV in-channel for easier collaboration.
-## Future Features
-- google sheets integration 
-	- Direct slack-google solution
-	- Zapier interface
-- Meeting Details automation (program manager only)
-	- takes csv and uses user's credentials to 
-	- add mentor zoom information
-	- google calendar api tie-in
-	- single-use for initial batch
+- Slackbot that accepts the input file via direct message and returns output file with supplemental information.
+
+## Strengths
+- Speed and Accuracy
+	- This solution yields a tentative schedule that is guaranteed not to double book times or mentors and companies.
+- Seamless Integration
+	- The slackbot is easily accessible. Results can easily be forwarded to relevant channels and users.
+	- Can easily be ported as additional functionality of existing slack bot
+- Potential
+	- Can expand functionality to assist in sending meeting invitations to mentors and companies.
+	- Provides base for an internal tool.
+	- User-Specific Commands
+		- ex. Only Mary(Slack ID:23849) can utilize the "Send Meeting Invitations" command
+- Flexibility
+	- Includes command-line tool for immediate usage or until slack bot becomes fully functional.
 
 ## Weaknesses
 - Algorithm / Data Processing
-	- Only half-way efficient, however yields actionable results much faster than traditional state space search methods 
+	- Is not a complete solution, however yields actionable results much faster than traditional state space search methods and provides additional information to assist users in completing the task.
 		- Could possibly be replaced with graph-based algorithm or Machine-Learning alternative.
 	- Isn't currently optimized for even distribution of mentors to companies.
 	- The current implementation has space complexity of O(~20n) when data is expanded, not including cost of pandas's operations.
@@ -68,7 +51,15 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 	- Requires server to run continuously
 		- would be justifiable if slack bot expands functionality to include automation of sending meeting invitations
 		- could be added to company's existing bot, if any
-
+## Future Features
+- google sheets integration 
+	- Direct slack-google solution
+	- Zapier interface
+- Meeting Details automation (program manager only)
+	- takes csv and uses user's credentials to 
+	- add mentor zoom information
+	- google calendar api tie-in
+	- single-use for initial batch
 # Data Processing
 1. create single company entries
 	- John, Tu, AM, Co1, Co2, Co3 ->
@@ -94,3 +85,26 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 - still needs tech skills for initial setup for users
 - interrupts user's current workflow
 - not as convenient as cli tool for fast one-time use
+
+# Steps
+- [x] Create bot
+- [x] parse Direct Message to bot 
+	- [x] private_link
+	- [x] channels
+	- [x] filename
+	- [x] filetype
+- [x] use requests to download csv
+- [x] route csv through data pipeline (pandas)
+- [x] wrangle data
+- [x] yield results (minimum)
+	- [x] reformat output without expanded data
+	- [x] put results in clean format (groupby 'Day', 'AM/PM')
+- [x] return csv
+- [x] create post keys
+	- [x] filename
+	- [x] filetype
+	- [x] channels
+	- [x] auth
+- [x] Write instructions
+- [x] Create requirements.txt
+- [x] Write report
