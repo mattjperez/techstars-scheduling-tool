@@ -4,14 +4,12 @@
 Automates matchmaking of mentors and founders by availability and preference.
 Goal: Automate processes for staff (Program Associate and Program Manager) to reduce time spent on matching startups to mentors.
 
-
-# Minimum Output: Schedule of meetings between mentors and companies
-- Schedule of meetings between mentors and companies
-- They then send calendar invites for each meeting (by hand)
-
-# Constraints
-- Mentor is not booked with two companies at same time
-- Startup not booked with more than one mentor at same time
+# Requirements
+- Constraints
+	- Mentor is not booked with two companies at same time
+	- Startup not booked with more than one mentor at same time
+- MVP
+	- Yields tentative schedule according to constraints
 
 # Current Solution
 - Giant, color-coded google sheets
@@ -22,8 +20,7 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 	- rescheduling/canceling shortly before meeting
 
 # My Solution
-## MVP
-- Slackbot that accepts the input file via direct message and returns output file with supplemental information.
+Slackbot that accepts the input file via direct message and returns output file with supplemental information.
 
 ## Strengths
 - Speed and Accuracy
