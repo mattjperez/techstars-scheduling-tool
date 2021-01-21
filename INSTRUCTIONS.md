@@ -1,4 +1,4 @@
-# Instructions
+# Bot Instructions
 This is a two-part setup. You must complete the **Initial Setup** section and one of the options from **Web Server**
 
 ## Initial Setup

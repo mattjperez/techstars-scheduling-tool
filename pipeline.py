@@ -1,5 +1,8 @@
 import pandas as pd
 import io
+import sys
+import os
+
 
 
 ## Lambda helper functions
@@ -63,11 +66,37 @@ def process_file(file):
     pending_mentors = unassigned_mentors + list(set(defined_mentors) - set(assigned_mentors))
     try:
         company_schedule['Full'].to_csv('./matches.csv', index=False, header=False)
-        print("CSV Written")
-        return [True, match_stats, pending_mentors, unassigned_companies] # Success, meeting stats as dict, unassigned mentors, unassigned companies
+        return True, match_stats, pending_mentors, unassigned_companies # Success, meeting stats as dict, unassigned mentors, unassigned companies
     except:
         print("Failed to write file from pipeline")
         return [False, {}, [], []]
+
+
+if __name__=="__main__":
+    fname = sys.argv[1]
+    with open(fname, 'r') as f:
+        processed, match_stats, pending_mentors, unassigned_companies = process_file(f)
+        if processed:
+            print(f'Output file location: {os.path.abspath("matches.csv")}')
+        print()
+        print("Meetings per company:")
+        for k,v in match_stats.items():
+            print(f'{k}: {v}')
+        print()
+        print(f"{len(pending_mentors)} Mentors Unassigned:")
+        for i in pending_mentors:
+            print(f'-{i}')
+        print()
+        if len(unassigned_companies) == 0:
+            print("Unassigned Companies: None")
+        else:
+            print("Unassigned Companies:")
+            for j in unassigned_companies:
+                print(j)
+
+
+
+
 
 
 # For making list of pending mentors

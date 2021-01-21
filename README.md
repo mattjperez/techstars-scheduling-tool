@@ -15,7 +15,7 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 - [x] route csv through data pipeline (pandas); from pipeline import process_data
 - [x] wrangle data
 - [x] yield results (minimum)
-	- [ ] reformat output without expanded data
+	- [x] reformat output without expanded data
 - [x] put results in clean format (groupby 'Day', 'AM/PM')
 - [x] return csv
 - [x] create post keys
@@ -24,22 +24,9 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 	- [x] channels
 	- [x] auth
 - [x] Write instructions
-- [ ] Create requirements.txt
+- [x] Create requirements.txt
 - [ ] Take screenshots
 - [x] Write report
-# Inputs
-- Name (First, Last), Object
-- Day of Week, Categorical
-- Time of Day (AM or PM), Binary
-- Company 2
-- Company 3
-- Company 4
-- Company 5
-- Company 6
-- Company 7
-- Company 8
-
-> 9 companies, Excess maually input by staff
 
 # Minimum Output: Schedule of meetings between mentors and companies
 - Schedule of meetings between mentors and companies
@@ -72,15 +59,28 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 
 ## Weaknesses
 - Algorithm
-	- Without knowing much more about Pandas operation efficiencies, must assume not efficient.
-	- Not a big problem due to scale of the data having natural limitations
+	- Isn't currently optimized for even distribution of mentors to companies.
+	- The current implementation has space complexity of O(~20n) when data is expanded, not including cost of pandas's operations.
+	- Not a big problem due to scale of the data having natural limitations (# of companies in incubator)
 - Slackbot
-	- Requires initial setup
+	- Needs dev/tech support for initial setup
 	- Requires server to run continuously
-	- May not be needed continuously if the functionality is limited to just this
-		- With future features, would justify having continuously active bot
-	- Made c
+		- would be justifiable if slack bot expands functionality to include automation of sending meeting invitations
+		- could be added to company's existing bot, if any
 
+# Data Processing
+1. create single company entries
+	- John, Tu, AM, Co1, Co2, Co3 ->
+		- John, Tu, AM, Co1
+		- John, Tu, AM, Co2
+		- John, Tu, AM, Co3
+2. Expand to include combination columns
+	- John, Tu, AM, Co1, John-Co1, John-Tu-AM, Co1-Tu-AM
+3. Use sieve approach to wittle list so no Mentors or Companies are double booked
+	- df['Mentor-Schedule'].drop_duplicates()
+	- df['Company-Schedule'].drop_duplicates()
+4. Sort by Day and Time, export to csv
+5. Return csv, # of meetings per company, unassigned mentors, and companies without meetings
 #
 - retain google sheets integration for easy transition for users
 - use google sheets api to get data
@@ -104,36 +104,17 @@ Workflow
 4. links returned to user
 
 # Why nots
+## CLI Tool
+- Great solution for this single task but doesn't have the same potential for future functionality as the slack bot
+- Command-Line tools can scare people. Tool is useless if no one uses it or uses it only once.
+- Still needs user to modify workflow for this task. 
 ## Use Google Sheets API
-- needs further authentication, credential information, won't work as standalone tool
-- needs access to org's google apis to make a script and give permissions
-- don't know exact format of document it will be used on (in sheets)
+- Similar setup admin requirements as slack bot, and could interface with workflow better.
+- Isn't as flexible as pandas and coded algorithms
+- Code can't be reused or ported to other interfaces easily.
 
 ## Host webapp interface
-- needs running web server. 
 - needs front-end skills
-- needs 
-
-## CLI Tool
-requirements:
-- copy/pasting ability
-- python
-- multiple steps
-- 
+- interrupts user's current workflow (as would cli tool)
 
 
-# Future
-## Change to Inputs
-- Reformat to use different schema
-	- Name, Day, AM/PM, Companies (single list), Mentor's Zoom link
-	- will help data processing
-	- zoom info can be used for meeting template feature (reduces pain of next step)
-
-# Data Processing
-convert to pandas dataframe
-
-create single company entries
-- from John, Tu, AM, Co1, Co2, Co3
-	- John, Tu, AM, Co1
-	- John, Tu, AM, Co2
-	- John, Tu, AM, Co3
