@@ -65,7 +65,7 @@ def process_file(file):
     unassigned_companies = list(set(all_companies) - set(matched_companies))
     pending_mentors = unassigned_mentors + list(set(defined_mentors) - set(assigned_mentors))
     try:
-        company_schedule['Full'].to_csv('./matches.csv', index=False, header=False)
+        company_schedule[['Day', 'AM/PM', 'Name', 'Company']].to_csv('./matches.csv', index=False, header=False)
         return True, match_stats, pending_mentors, unassigned_companies
     except:
         print("Failed to write file from pipeline")
