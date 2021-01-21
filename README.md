@@ -22,6 +22,10 @@ Goal: Automate processes for staff (Program Associate and Program Manager) to re
 # My Solution
 Slackbot that accepts the input file via direct message and returns output file with supplemental information.
 
+The tentative schedule provided by the program sets a great starting point for staff to build from.
+If we assume the momentum for this task is slower in the beginning and faster in the end, this solution will help bypass that initial hurdle.
+
+
 ## Strengths
 - Speed and Accuracy
 	- This solution yields a tentative schedule that is guaranteed not to double book times or mentors and companies.
