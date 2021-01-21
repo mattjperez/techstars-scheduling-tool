@@ -49,14 +49,11 @@ Slackbot that accepts the input file via direct message and returns output file 
 		- would be justifiable if slack bot expands functionality to include automation of sending meeting invitations
 		- could be added to company's existing bot, if any
 ## Future Features
-- google sheets integration 
+- gsuite integration 
 	- Direct slack-google solution
+	- Google calendar api tie-in
 	- Zapier interface
-- Meeting Details automation (program manager only)
-	- takes csv and uses user's credentials to 
-	- add mentor zoom information
-	- google calendar api tie-in
-	- single-use for initial batch
+- Meeting Invitation Automation (program manager only)
 # Data Processing
 1. create single company entries
 	- John, Tu, AM, Co1, Co2, Co3 ->
