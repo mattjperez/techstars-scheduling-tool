@@ -1,3 +1,11 @@
+# Command-Line Instructions
+```
+git clone https://github.com/mattjperez/techstars-scheduling-tool.git
+cd techstars-scheduling-tool
+source .venv/bin/activate
+pip install -r requirements.txt
+python3 pipeline.py techstars_source.csv
+```
 # Bot Instructions
 This is a two-part setup. You must complete the **Initial Setup** section and one of the options from **Web Server**
 
