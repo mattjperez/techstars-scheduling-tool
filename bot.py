@@ -18,19 +18,16 @@ app = Flask(__name__)
 # Set Env to slackapi interfaces
 slack_event_adapter = SlackEventAdapter(os.environ['SIGNING_SECRET'],'/slack/events',app)
 client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
-client.chat_postMessage(channel='#matchmaker-bot', text="Hello world!")
 BOT_ID = client.api_call("auth.test")['user_id']
 
 
 ## Receive Message
 @slack_event_adapter.on('message')
 def message(payload):
-    print("Message received")
     event = payload.get('event', {})
     channel_id = event.get('channel')
     user_id = event.get('user')
     text = event.get('text')
-    print()
 
     try:
         file = event.get('files', {})
@@ -38,19 +35,18 @@ def message(payload):
         print("No file attached!")
 
     if user_id != None and BOT_ID != user_id and file:
-        print(f'File: {file[0]}')
+        #print(f'File: {file[0]}')
         file_info = file[0]
         if file_info['filetype'] == 'csv':
             download_url = file_info['url_private']
             raw = get_file(download_url)
-            processed = process_file(raw)
-            print()
-            print("Processed File")
-            print()
+            processed, match_stats, unassigned_mentors, unassigned_companies = process_file(raw)
             try:
                 if processed:
                     post_file(str(channel_id))
-                    client.chat_postMessage(channel=channel_id, text = "Here're your matches!")
+                    client.chat_postMessage(channel=channel_id, text = "Assignment Statistics: {}".format(match_stats))
+                    client.chat_postMessage(channel=channel_id, text = "{} Unassigned Mentors: {}".format(len(unassigned_mentors), unassigned_mentors))
+                    client.chat_postMessage(channel=channel_id, text = "Unassigned Companies: {}".format(unassigned_companies))
                     print("File sent")
             except:
                 print("Failed to send file")

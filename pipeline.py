@@ -28,6 +28,8 @@ def time_to_num(row):
 
 def process_file(file):
     df = pd.read_csv(file)
+    undefined = df[(df['Day'] == 'Undefined ') | (df['AM/PM'] == 'Undefined ') | (df['Day'] == 'Undefined') | (df['AM/PM'] == 'Undefined')]
+    unassigned_mentors = undefined['Name'].values.tolist()
     defined = df[(df['Day'] != 'Undefined ') & (df['AM/PM'] != 'Undefined ') & (df['Day'] != 'Undefined') & (df['AM/PM'] != 'Undefined')]
     defined = defined.fillna('Drop')
     defined["Companies"] = defined['Company 2'] + ',' + defined['Company 3'] + ',' + defined['Company 4'] + ',' + defined['Company 5'] + ',' + defined['Company 6'] + ',' + defined['Company 7'] + ',' + defined['Company 8']
@@ -41,6 +43,8 @@ def process_file(file):
                 .drop('level_3', axis=1)
                 .rename(columns={0:'Company'}))
     post_split = post_split[post_split['Company'] != 'Drop']
+    all_companies = post_split['Company'].drop_duplicates().to_list()
+    defined_mentors = post_split['Name'].drop_duplicates().to_list()
     post_split['Mentor-Company'] = post_split['Name'] + ' - ' + post_split['Company']
     post_split['Mentor-Schedule'] = post_split['Name'] + ' - ' + post_split['Day'] + ' - ' + post_split['AM/PM']
     post_split['Company-Schedule'] = post_split['Company'] + ' - ' + post_split['Day'] + ' - ' + post_split['AM/PM']
@@ -52,13 +56,18 @@ def process_file(file):
     company_schedule = company_schedule.assign(ToD=col2.values)
     company_schedule['Full'] = company_schedule['Day'] + ' - ' + company_schedule['AM/PM'] + ' - ' + company_schedule['Mentor-Company']
     company_schedule = company_schedule.sort_values(by=['DoW', 'ToD'], ascending=[True, True])
-
+    match_stats = company_schedule['Company'].value_counts().to_dict()
+    matched_companies = match_stats.keys()
+    assigned_mentors = company_schedule['Name'].to_list()
+    unassigned_companies = list(set(all_companies) - set(matched_companies))
+    pending_mentors = unassigned_mentors + list(set(defined_mentors) - set(assigned_mentors))
     try:
-        company_schedule['Full'].to_csv('./matches.csv', index=False)
-        return True
+        company_schedule['Full'].to_csv('./matches.csv', index=False, header=False)
+        print("CSV Written")
+        return [True, match_stats, pending_mentors, unassigned_companies] # Success, meeting stats as dict, unassigned mentors, unassigned companies
     except:
         print("Failed to write file from pipeline")
-        return False
+        return [False, {}, [], []]
 
 
 # For making list of pending mentors
