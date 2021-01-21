@@ -2,6 +2,8 @@
 ```
 git clone https://github.com/mattjperez/techstars-scheduling-tool.git
 cd techstars-scheduling-tool
+pip3 install virtualenv
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python3 pipeline.py techstars_source.csv
